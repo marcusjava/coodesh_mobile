@@ -7,7 +7,10 @@ import { Container, Title, Image } from "./styles";
 const Home = () => {
   return (
     <Container>
-      <Image source={require("../../assets/pharma.png")} />
+      <Image
+        source={require("../../assets/pharma.png")}
+        accessibilityRole="image"
+      />
       <Search />
       <ListItems />
     </Container>

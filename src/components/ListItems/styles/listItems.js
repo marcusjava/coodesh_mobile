@@ -20,3 +20,10 @@ export const Button = styled.TouchableOpacity`
   color: #4b5c6b;
   font-size: 50px;
 `;
+
+export const NoItems = styled.Text`
+  font-weight: bold;
+  letter-spacing: 3px;
+  font-size: 30px;
+  color: #4b5c6b;
+`;

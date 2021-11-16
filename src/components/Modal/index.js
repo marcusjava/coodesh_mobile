@@ -30,9 +30,6 @@ ID (Número de identificação)
 
 const Modal = ({ modalRef }) => {
   const { pacient } = usePacient();
-
-  console.log(pacient);
-
   return (
     <Modalize ref={modalRef}>
       <Container>

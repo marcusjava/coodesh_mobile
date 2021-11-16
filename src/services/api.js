@@ -1,7 +1,9 @@
 import axios from "axios";
 import dayjs from "dayjs";
 
-export const api = axios.create({ baseURL: "https://randomuser.me/api" });
+export const BASE_URL = "https://randomuser.me/api";
+
+export const api = axios.create({ baseURL: BASE_URL });
 
 export const getPacientsFromAPI = async ({ page, numberOfItems }) => {
   const response = await api.get("/", {

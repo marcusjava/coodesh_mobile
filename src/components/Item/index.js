@@ -26,6 +26,7 @@ const Item = ({ data, openModal }) => {
       <Container onPress={setItemAndDisplayModal}>
         <ImageContainer>
           <Image
+            accessibilityLabel="Thumbnail"
             resizeMethod="resize"
             source={{
               uri: `${picture}`,

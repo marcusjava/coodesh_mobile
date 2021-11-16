@@ -27,7 +27,11 @@ const Search = () => {
           style={{ position: "absolute", right: 10 }}
         />
       </InputContainer>
-      <Button onPress={handleSearch}>
+      <Button
+        onPress={handleSearch}
+        accessibilityLabel="search"
+        testID="search-button"
+      >
         <MaterialIcons name="filter-alt" size={50} color="#4B5C6B" />
       </Button>
     </Container>
