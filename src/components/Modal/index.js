@@ -28,10 +28,9 @@ ID (Número de identificação)
 
 */
 
-const Modal = ({ modalRef }) => {
-  const { pacient } = usePacient();
+const Modal = ({ modalRef, detail }) => {
   return (
-    <Modalize ref={modalRef}>
+    <Modalize ref={modalRef} accessibilityLabel="modal">
       <Container>
         <Close>
           <FontAwesome
@@ -40,16 +39,16 @@ const Modal = ({ modalRef }) => {
             onPress={() => modalRef.current?.close()}
           />
         </Close>
-        <Image source={{ uri: pacient.picture }} />
-        <Title>{pacient.name}</Title>
+        <Image source={{ uri: detail.picture }} />
+        <Title>{detail.name}</Title>
         <DescriptionContainer>
-          <Description>Email: {pacient.email}</Description>
-          <Description>Contato: {pacient.phone}</Description>
-          <Description>Endereço: {pacient.location}</Description>
-          <Description>Genero: {pacient.gender}</Description>
-          <Description>Nasc: {pacient.dob}</Description>
-          <Description>Nacionalidade: {pacient.nat}</Description>
-          <Description>ID: {pacient.id}</Description>
+          <Description>Email: {detail.email}</Description>
+          <Description>Contato: {detail.phone}</Description>
+          <Description>Endereço: {detail.location}</Description>
+          <Description>Genero: {detail.gender}</Description>
+          <Description>Nasc: {detail.dob}</Description>
+          <Description>Nacionalidade: {detail.nat}</Description>
+          <Description>ID: {detail.id}</Description>
         </DescriptionContainer>
       </Container>
     </Modalize>

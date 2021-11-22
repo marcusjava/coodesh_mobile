@@ -8,9 +8,6 @@
     "eject": "expo eject",
     "test": "jest --watchAll"
   },
-  "jest": {
-    "preset": "jest-expo"
-  },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.11",
     "@react-native-community/masked-view": "^0.1.11",
@@ -24,11 +21,14 @@
     "expo-status-bar": "~1.1.0",
     "fuse.js": "^6.4.6",
     "jest": "^27.3.1",
+    "msw": "^0.35.0",
+    "promise-polyfill": "^8.2.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-modalize": "^2.0.12",
+    "react-native-portalize": "^1.0.7",
     "react-native-reanimated": "^2.2.4",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.8.0",

@@ -65,12 +65,16 @@ export const PacientProvider = ({ children }) => {
   };
 
   const loadMore = async () => {
+    if (search.length > 0) return;
+
+    console.log("loading more");
+
     setPage(page + 1);
     const { data, actualPage } = await getPacientsFromAPI({
       page: page,
       numberOfItems: 10,
     });
-    setPacients((oldData) => [...data, ...oldData]);
+    setPacients((oldData) => [...oldData, ...data]);
     setPage(actualPage);
   };
 

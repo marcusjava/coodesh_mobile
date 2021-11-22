@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 
 export const Container = styled.SafeAreaView`
-  height: 500px;
+  height: 520px;
   padding-bottom: 50px;
 `;
 

@@ -12,18 +12,16 @@ import {
 } from "./styles/item";
 import { usePacient } from "../../context/pacient";
 
-const Item = ({ data, openModal }) => {
-  const { setPacient } = usePacient();
+const Item = ({ data, onPress, idx }) => {
   const { name, gender, dob, phone, picture } = data;
-
-  const setItemAndDisplayModal = () => {
-    setPacient(data);
-    openModal();
-  };
 
   return (
     <>
-      <Container onPress={setItemAndDisplayModal}>
+      <Container
+        accessibilityLabel="pacient item"
+        onPress={onPress}
+        testID={`pacient-${idx}`}
+      >
         <ImageContainer>
           <Image
             accessibilityLabel="Thumbnail"

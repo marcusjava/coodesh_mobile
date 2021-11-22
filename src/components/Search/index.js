@@ -28,7 +28,7 @@ const Search = () => {
         />
       </InputContainer>
       <Button
-        onPress={handleSearch}
+        onPress={() => searchPacients(search)}
         accessibilityLabel="search"
         testID="search-button"
       >

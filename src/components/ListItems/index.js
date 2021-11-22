@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { View, Text } from "react-native";
 import { ActivityIndicator, FlatList } from "react-native";
 
@@ -6,30 +6,42 @@ import { Container, NoItems } from "./styles/listItems";
 import { usePacient } from "../../context/pacient";
 import Item from "../Item";
 import Modal from "../Modal";
+import { Portal } from "react-native-portalize";
 
 const ListItems = () => {
-  const { pacients, loadMore, search, loading } = usePacient();
+  const [detail, setDetail] = useState({});
+  const { pacients, loadMore, search } = usePacient();
 
-  const data = search.length > 0 ? search : pacients;
+  let data = search.length > 0 ? search : pacients;
 
   const modalRef = useRef(null);
 
-  const openModal = () => {
+  const openModal = (item) => {
+    setDetail(item);
     modalRef.current?.open();
   };
 
   return (
     <Container>
       <FlatList
+        testID="flatlist"
         horizontal={false}
         showsVerticalScrollIndicator={false}
         accessibilityLabel="pacients list"
         data={data}
-        renderItem={({ item }) => {
-          return <Item data={item} openModal={openModal} />;
+        renderItem={({ item, index }) => {
+          return (
+            <Item
+              data={item}
+              idx={index}
+              onPress={() => {
+                openModal(item);
+              }}
+            />
+          );
         }}
         keyExtractor={(item) => String(item.id)}
-        onEndReachedThreshold={0.1}
+        onEndReachedThreshold={0.7}
         onEndReached={loadMore}
         ListEmptyComponent={() => <NoItems>No Items</NoItems>}
         ListFooterComponent={() => {
@@ -48,8 +60,9 @@ const ListItems = () => {
           );
         }}
       />
-
-      <Modal modalRef={modalRef} />
+      <Portal>
+        <Modal modalRef={modalRef} detail={detail} />
+      </Portal>
     </Container>
   );
 };

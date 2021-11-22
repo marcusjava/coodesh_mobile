@@ -1,10 +1,10 @@
 import "react-native-gesture-handler";
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import Routes from "./src/routes";
 import { PacientProvider } from "./src/context/pacient";
+import { Host } from "react-native-portalize";
 
 //ActivityIndicator
 
@@ -13,7 +13,9 @@ export default function App() {
     <NavigationContainer>
       <StatusBar hidden={true} />
       <PacientProvider>
-        <Routes />
+        <Host>
+          <Routes />
+        </Host>
       </PacientProvider>
     </NavigationContainer>
   );

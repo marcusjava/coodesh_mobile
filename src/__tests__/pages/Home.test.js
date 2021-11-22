@@ -1,17 +1,26 @@
 import React from "react";
-import { render, fireEvent, cleanup } from "@testing-library/react-native";
+import "@testing-library/jest-native/extend-expect";
+import {
+  render,
+  fireEvent,
+  cleanup,
+  waitForElementToBeRemoved,
+  waitFor,
+} from "@testing-library/react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { PacientContext } from "../../context/pacient";
+import { Host } from "react-native-portalize";
 import Home from "../../pages/Home";
 import {
   fakePacientsfromAPI,
   fakePacientsfromContext,
 } from "../../utils/fakePacients";
-import { getPacientsFromAPI, BASE_URL, api } from "../../services/api";
+import { server } from "../../utils/mocks/server";
+import { rest } from "msw";
 
-import axios from "axios";
-
-jest.mock("axios");
+beforeEach(() => {
+  cleanup();
+});
 
 const renderWithProvider = (
   ui,
@@ -26,11 +35,14 @@ const renderWithProvider = (
           value={{
             pacients: mockedPacients,
             search: mockedSearchedPacients,
+            searchPacients: jest.fn(),
             pacient,
-            loading: true,
+            loading: false,
+            setPacient: jest.fn(),
+            pacient: {},
           }}
         >
-          {ui}
+          <Host>{ui}</Host>
         </PacientContext.Provider>
       </NavigationContainer>
     ),
@@ -49,9 +61,7 @@ describe("testing Home Component render properly", () => {
   it("shows search input and button ", () => {
     const {
       getByPlaceholderText,
-      debug,
-      getByRole,
-      getByTestId,
+
       getByA11yLabel,
     } = renderWithProvider(<Home />);
     const searchInput = getByPlaceholderText("Searching");
@@ -59,22 +69,16 @@ describe("testing Home Component render properly", () => {
     const button = getByA11yLabel("search");
     expect(button).not.toBeNull();
   });
-  it("should render Richard Sullivan data on list", () => {
-    const {
-      getByPlaceholderText,
-      debug,
-      queryByA11yLabel,
-      getAllByA11yLabel,
-      getByRole,
-      getByText,
-      getByTestId,
-      getByA11yLabel,
-    } = renderWithProvider(<Home />, fakePacientsfromContext);
+  it("should render Richard Sullivan data on flatlist", () => {
+    const { getAllByA11yLabel, getByText, getByA11yLabel } = renderWithProvider(
+      <Home />,
+      fakePacientsfromContext
+    );
 
     //check items
     const list = getByA11yLabel("pacients list");
 
-    expect(list.props.children).toHaveLength(2);
+    expect(list.props.children).not.toBeNull();
 
     const name = getByText(/richard sullivan/i);
     expect(name.props.children).toEqual("Richard Sullivan");
@@ -82,6 +86,65 @@ describe("testing Home Component render properly", () => {
     expect(picture.props.source.uri).toEqual(
       "https://randomuser.me/api/portraits/men/63.jpg"
     );
-    debug();
+  });
+  it("should render Jusseline data on flatlist", () => {
+    const { getAllByA11yLabel, getByText, getByA11yLabel } = renderWithProvider(
+      <Home />,
+      fakePacientsfromContext
+    );
+
+    //check items
+    const list = getByA11yLabel("pacients list");
+
+    expect(list.props.children).not.toBeNull();
+
+    const name = getByText(/Jusseline Melo/i);
+    expect(name.props.children).toEqual("Jusseline Melo");
+    const picture = getAllByA11yLabel("Thumbnail")[1];
+    expect(picture.props.source.uri).toEqual(
+      "https://randomuser.me/api/portraits/women/80.jpg"
+    );
+  });
+
+  it("should render flatlist items correctly", async () => {
+    const eventData = {
+      nativeEvent: {
+        contentOffset: {
+          x: 0,
+          y: 500,
+        },
+        contentSize: {
+          // Dimensions of the scrollable content
+          height: 885,
+          width: 328,
+        },
+        layoutMeasurement: {
+          // Dimensions of the device
+          height: 520,
+          width: 328,
+        },
+      },
+    };
+    const { getByText, getByTestId, getAllByTestId, getAllByText, debug } =
+      renderWithProvider(<Home />);
+
+    /*   const pacientItems = getAllByTestId(/pacient-/i);
+    expect(pacientItems.length).toEqual(10);
+    fireEvent.scroll(getByTestId("flatlist"), eventData); */
+    // debug();
+  });
+});
+
+describe("testing search pacients", () => {
+  it("searching for a specific pacient", () => {
+    const { getByText, getByA11yLabel, getByPlaceholderText, debug } =
+      renderWithProvider(<Home />, fakePacientsfromContext);
+    const pacient = "marcus";
+    const list = getByA11yLabel("pacients list");
+    const input = getByPlaceholderText("Searching");
+    const searchButton = getByA11yLabel("search");
+    fireEvent.changeText(input, pacient);
+    fireEvent.press(searchButton);
+    expect(getByText(/marcus/i).props.children).toEqual("Marcus Melo");
   });
 });
