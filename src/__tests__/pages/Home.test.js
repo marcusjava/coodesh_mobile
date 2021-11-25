@@ -105,34 +105,6 @@ describe("testing Home Component render properly", () => {
       "https://randomuser.me/api/portraits/women/80.jpg"
     );
   });
-
-  it("should render flatlist items correctly", async () => {
-    const eventData = {
-      nativeEvent: {
-        contentOffset: {
-          x: 0,
-          y: 500,
-        },
-        contentSize: {
-          // Dimensions of the scrollable content
-          height: 885,
-          width: 328,
-        },
-        layoutMeasurement: {
-          // Dimensions of the device
-          height: 520,
-          width: 328,
-        },
-      },
-    };
-    const { getByText, getByTestId, getAllByTestId, getAllByText, debug } =
-      renderWithProvider(<Home />);
-
-    /*   const pacientItems = getAllByTestId(/pacient-/i);
-    expect(pacientItems.length).toEqual(10);
-    fireEvent.scroll(getByTestId("flatlist"), eventData); */
-    // debug();
-  });
 });
 
 describe("testing search pacients", () => {
