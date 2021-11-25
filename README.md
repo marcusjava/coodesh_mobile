@@ -1,8 +1,10 @@
 ![Pharma Inc Demo](src/assets/coodesh_mobile.gif)
 
-# Bem Vindo ao Pharma Inc React Native App
+# Bem Vindo ao Pharma Inc React Native App Desafio front-end Coodesh
 
 ## Projeto desenvolvido com React Native + Expo
+
+## Desafio site `https://lab.coodesh.com/public-challenges/front-end-challenge-2021`
 
 ## Tecnologias utilizadas
 
